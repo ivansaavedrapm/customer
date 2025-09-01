@@ -1,7 +1,14 @@
 package com.customer.api.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "region")
 public class Region {
 
+	@Id
 	private Integer region_id;
 	
 	private String region;
