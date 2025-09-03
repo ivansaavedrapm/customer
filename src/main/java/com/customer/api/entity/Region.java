@@ -17,6 +17,10 @@ public class Region {
 	
 	private Integer status;
 	
+	public Region() {
+		
+	}
+	
 	public Region(Integer region_id, String region, String tag, Integer status) {
 		super();
 		this.region_id = region_id;
