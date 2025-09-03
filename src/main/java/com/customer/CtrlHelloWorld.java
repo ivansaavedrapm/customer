@@ -10,6 +10,6 @@ public class CtrlHelloWorld {
 
 	@GetMapping
 	public String HelloWorld() {
-		return "Hola Mundo :)";
+		return "Hola Mundo :(";
 	}
 }
