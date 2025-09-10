@@ -15,36 +15,42 @@ import com.customer.commons.dto.ApiResponse;
 @Service
 public class SvcRegionImp implements SvcRegion{
 
-	@Autowired
-	RepoRegion repo;
+	@Override
+	public List<Region> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Region> findActive() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ApiResponse create(DtoRegionIn in) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ApiResponse update(DtoRegionIn in, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ApiResponse enable(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ApiResponse disable(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
-	@Override
-	public ResponseEntity<List<Region>> getRegions() {
-		return new ResponseEntity<>(repo.getRegions(), HttpStatus.OK);
-	}
-
-	@Override
-	public ResponseEntity<ApiResponse> createRegion(DtoRegionIn in) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<ApiResponse> updateRegion(DtoRegionIn in, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<ApiResponse> enableRegion(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<ApiResponse> disableRegion(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
