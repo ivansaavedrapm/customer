@@ -40,9 +40,9 @@ public interface RepoRegion extends JpaRepository<Region, Integer>{
 	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Transactional
 	@Query(value ="UPDATE region SET status = :status WHERE region_id = :region_id", nativeQuery = true)
-	void updateStatus(@Param("region_id") Integer region_id, @Param("status") Integer status);
+	void setStatus(@Param("region_id") Integer region_id, @Param("status") Integer status);
 	
-	// dividido en 2
+	// enable & disable
 	
 	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Transactional
