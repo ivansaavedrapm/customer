@@ -1,8 +1,14 @@
 package com.customer.api.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,6 +37,9 @@ public class SvcCustomerImp implements SvcCustomer{
 	@Autowired
 	MapperCustomer mapper;
 	
+	@Value("${app.upload.dir}")
+	private String uploadDir;
+	
 	@Override
 	public List<DtoCustomerListOut> findAll() {
 		try {
@@ -46,9 +55,15 @@ public class SvcCustomerImp implements SvcCustomer{
 		try {
 			validateCustomerId(id);
 			
-			// getCustomer
+			DtoCustomerOut customer = repo.getCustomer(id);
+			if(customer == null )
+				throw new ApiException(HttpStatus.NOT_FOUND, "El id del cliente no existe");
+						
+			String image = readCustomerImageFile(id);
+			customer.setImage(image);
 			
-			return null;
+			return customer;
+
 		}catch (DataAccessException e) {
 			throw new DBAccessException(e);
 		}
@@ -132,5 +147,37 @@ public class SvcCustomerImp implements SvcCustomer{
 			throw new DBAccessException(e);
 		}
 	}
+	
+	private String readCustomerImageFile(Integer customer_id) {
+	    try {
+		CustomerImage customerImage = repoCustomerImage.findByCustomer_id(customer_id);
+		if(customerImage == null)
+			return "";
+		
+		String imageUrl = customerImage.getImage();
+		
+		// Si la URL comienza con "/" la eliminamos para obtener la ruta relativa
+	  	 if (imageUrl.startsWith("/")) {
+	       	    imageUrl = imageUrl.substring(1);
+	   	}
+	  
+	  	 // Construir el Path
+	  	 Path imagePath = Paths.get(uploadDir, imageUrl);
+	  
+	  	 // Verifica que el archivo exista
+	   	if (!Files.exists(imagePath))
+	   	    return "";
+	  
+		// Leer los bytes de la imagen y codificarlos a Base64
+		byte[] imageBytes = Files.readAllBytes(imagePath);
+		return Base64.getEncoder().encodeToString(imageBytes);
+	    
+	    }catch (DataAccessException e) {
+	    	throw new DBAccessException(e);
+	    }catch (IOException e) {
+	    	throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al leer el archivo");
+	    }
+	}
+
 
 }

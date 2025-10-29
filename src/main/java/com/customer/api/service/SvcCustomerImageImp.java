@@ -67,7 +67,7 @@ public class SvcCustomerImageImp implements SvcCustomerImage {
 			// Crear la entidad CustomerImage y guardar la URL en la base de datos
 			CustomerImage customerImage = new CustomerImage();
 			customerImage.setCustomerId(in.getCustomerId());
-			customerImage.setImage("/uploads/img/customer/" + fileName);
+			customerImage.setImage("/img/customer/" + fileName);
 			customerImage.setStatus(1); 
 
 			// Guardar la ruta de la imagen
