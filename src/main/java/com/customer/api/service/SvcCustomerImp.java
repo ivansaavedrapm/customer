@@ -11,7 +11,9 @@ import com.customer.api.dto.DtoCustomerIn;
 import com.customer.api.dto.DtoCustomerListOut;
 import com.customer.api.dto.DtoCustomerOut;
 import com.customer.api.entity.Customer;
+import com.customer.api.entity.CustomerImage;
 import com.customer.api.repository.RepoCustomer;
+import com.customer.api.repository.RepoCustomerImage;
 import com.customer.commons.dto.ApiResponse;
 import com.customer.commons.mapper.MapperCustomer;
 import com.customer.exception.ApiException;
@@ -22,6 +24,9 @@ public class SvcCustomerImp implements SvcCustomer{
 	
 	@Autowired
 	RepoCustomer repo;
+	
+	@Autowired
+	RepoCustomerImage repoCustomerImage;
 
 	@Autowired
 	MapperCustomer mapper;
@@ -54,6 +59,14 @@ public class SvcCustomerImp implements SvcCustomer{
 		try {
 			Customer customer = mapper.fromDtoIn(in);
 			repo.save(customer);
+			
+			CustomerImage customerImage = new CustomerImage();
+			customerImage.setCustomerId(customer.getCustomer_id());
+			customerImage.setImage("");
+			customerImage.setStatus(1);
+				       
+			repoCustomerImage.save(customerImage);
+			
 			return new ApiResponse("El cliente ha sido registrado");
 		}catch (DataAccessException e) {
 			if (e.getLocalizedMessage().contains("ux_customer_rfc"))

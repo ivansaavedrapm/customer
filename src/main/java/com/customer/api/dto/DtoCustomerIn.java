@@ -43,6 +43,10 @@ public class DtoCustomerIn {
 	@JsonProperty("region_id")
 	@NotNull(message="El region_id es obligatorio")
 	private Integer region_id;
+	
+	public DtoCustomerIn() {
+		
+	}
 
 	public String getName() {
 		return name;
