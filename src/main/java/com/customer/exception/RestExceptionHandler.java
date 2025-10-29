@@ -47,6 +47,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid( MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 	    
+		System.out.println(ex.getLocalizedMessage());
+		
 		ExceptionResponse response = new ExceptionResponse();
 		   
 	    response.setTimestamp(LocalDateTime.now());
